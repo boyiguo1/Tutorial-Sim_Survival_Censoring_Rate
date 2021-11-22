@@ -35,9 +35,6 @@ find_censor_parameter <- function(
   ){
     ret <- integrate(            # Start (Integrate of time)
       f = function(ti, theta, alpha.t, alpha.c){
-        # theta  <-args[1]
-        # alpha.t<-args[2]
-        # alpha.c<-args[3]
         lambda.i<-u
         part1<-density.fun.lambda(lambda.i)
         part2<-dweibull(ti,alpha.c,theta)
@@ -45,7 +42,6 @@ find_censor_parameter <- function(
         return(part1*part2*part3)
       },
       0, Inf,
-      # args=args0
       theta = theta, alpha.t = shape_hazard, alpha.c = shape_censor
     )
     return(ret$value)
@@ -53,8 +49,6 @@ find_censor_parameter <- function(
 
 
   censor.prop <- function(theta, p, shape_hazard, shape_censor){
-    # p <- args[1]
-    # args0 <- c(theta, shape_hazard, shape_censor)
     cen.P <- integrate(         # Start (Integrate of lambda)
       function(u, theta, shape_hazard, shape_censor){
         sapply(u, integration_over_time,
@@ -69,11 +63,6 @@ find_censor_parameter <- function(
     )$value     # End(int of lambda)
     return(cen.P-p)
   }
-
-  # shape_hazard<- 1.2
-  # shape_censor<-0.8
-
-  # args<-c(pi, shape_hazard, shape_censor)
 
   theta<-uniroot(censor.prop, interval = c(0.1,200),
                  ## Argument for censor.prop
