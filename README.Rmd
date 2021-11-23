@@ -24,10 +24,14 @@ The goal of this repository is to provide a tutorial, as well as _R_ functions, 
 # Background
 When running extensive simulation studies for survival outcome with (right-)censoring, tuning of the censoring distribution is required and labor intensive. @Wan2017 proposed a numeric method to estimate the parameters of censoring distributions given the hazard distribution and covariate data, which greatly improves the automation of survival simulation studies. A closed-form calculation is provided for limited scenarios, but we focused on the numeric method for the purpose of generalizability. Specifically, we focus on the case where hazard and censoring distributions are Weibull distributions with different parameters, i.e. different shape $k$ and scale $\lambda$. In theory, this should also work for cases where the distributions are exponential, which is equivalent to a Weibull(1, $\lambda$), or Weibull with the same shape parameter $k$ for both  hazard and censoring distributions. We don't (and probably won't) provide support for the Gumpertz distribution (another common hazard distribution).
 
-In the simulation study, we focus on examining the following factors: censoring proportions $\pi \in \{0.15, 0.3, 0.45\},$ [TODO: expand to more factors, e.g. sample size, ]. For each combination of the factors, we run 1000 replications. 
+In this repository/project, we [refactor](https://en.wikipedia.org/wiki/Code_refactoring) the R code segments offered in the appendix of @Wan2017 and provide a function `find_censor_parameter` located in `R\find_censor_parameter.R` [TODO: add a link to the address]. We further conducted a simulation study to examine __if using the estimated censoring parameter would yield anticipated censoring proportion__. In the simulation study, we focus on examining the following factors: censoring proportions $\pi \in \{0.15, 0.3, 0.45\},$ [TODO: expand to more factors, e.g. sample size, ]. For each combination of the factors, we run 1000 replications. We use the R package [`simsurv`](https://cran.r-project.org/web/packages/simsurv/index.html)[@Brilleman2020] for simulating the event time. There are many other factors in the R function `find_censor_parameter` that could be considered further to examine the performance of the simulation procedure, such as the parameters of the empiric density estimation. 
 
 # Get started 
+1. Install the necessary workflow packages [`targets`](https://cran.r-project.org/web/packages/targets/index.html) and [`renv`](https://rstudio.github.io/renv/articles/renv.html) if you don't already have
+2. Open the R console and call `renv::restore()` to install the required R packages. Please give permission to install the necessary packages. This will mirror the version of packages used in the creation of the manuscript exactly.
+3. call the `tar_make()` function to run the pipeline.
 
+For the generated report, please go to [TODO: add the report link address]
 
 
 ### References
