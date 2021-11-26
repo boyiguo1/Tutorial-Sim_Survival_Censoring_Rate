@@ -21,13 +21,13 @@ list(
   # ** Examine Find Censoring Rate Function ---------------------------------
   tar_rep(cns_rate_batch_15,
           run_cns_rate_test(pi=0.15),
-          batches = 1, reps = 1),
+          batches = 1, reps = 10),
 
   tar_rep(cns_rate_batch_30,
           run_cns_rate_test(pi=0.30),
-          batches = 1, reps = 1),
+          batches = 1, reps = 10),
 
   tar_rep(cns_rate_batch_45,
           run_cns_rate_test(pi = 0.45),
-          batches = 1, reps = 1)
+          batches = 1, reps = 10)
 )

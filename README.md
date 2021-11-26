@@ -9,14 +9,18 @@
 The goal of this repository is to provide a tutorial, as well as *R*
 functions, to simulate survival outcomes with controlled censoring
 proportion following Wan (2017). Particularly, we are interested in
-simulate survival outcomes (both *surviving time* and *censoring
-status*) followed Weibull distributions (for *event time* and *censoring
-time*), where the exponential distribution can be considered as a
-special case of the weibull distribution. As a part of the tutorial, we
-examine if the simulated data generated with the proposed method/R
-function has the anticipated censoring proportion. The simulation study
-was constructed using the R workflow package
+simulating survival outcomes (both *surviving time* and *censoring
+status*) that follow Weibull distributions (for *event time* and
+*censoring time*), where the exponential distribution can be considered
+as a special case of the weibull distribution. As a part of the
+tutorial, we examine if the simulated data generated with the proposed
+method/R function has the anticipated censoring proportion. The
+simulation study was constructed using the R workflow package
 [targets](https://cran.r-project.org/web/packages/targets/index.html).
+
+We hope this repository could be a starting point for people who run
+survival simulation, where they can modify and improve the code to
+validate their data generating process.
 
 # Background
 
@@ -24,13 +28,23 @@ When running extensive simulation studies for survival outcome with
 (right-)censoring, tuning of the censoring distribution is required and
 labor intensive. Wan (2017) proposed a numeric method to estimate the
 parameters of censoring distributions given the hazard distribution and
-covariate data, which greatly improves the automation of survival
-simulation studies. A closed-form calculation is provided for limited
-scenarios, but we focused on the numeric method for the purpose of
-generalizability. Specifically, we focus on the case where hazard and
-censoring distributions are Weibull distributions with different
-parameters, i.e. different shape *k* and scale *λ*. In theory, this
-should also work for cases where the distributions are exponential,
+covariates, which greatly improves the automation of survival simulation
+studies. The core idea is, the censoring probability can be expressed as
+a conditional expectation of individual censoring probability with
+respect to individual scale parameter *λ*<sub>*i*</sub> of individual
+hazard distribution. To note, *λ* is a function of the baseline hazard
+and covariates. With some math derivation, the censoring probability can
+be expressed as an integration of weighted censoring probability (by the
+density of *λ*<sub>*i*</sub>) over the range of *λ*<sub>*i*</sub>, where
+the density of *λ*<sub>*i*</sub> are estimated empirically. With an
+anticipated censoring proportion, we can numerically solve the equation
+of censoring probability to get the scale parameter of the censoring
+distribution. A closed-form calculation was introduced for limited
+scenarios in the manuscript, but we focused on the numeric method for
+the purpose of generalizability. Specifically, we focus on the case
+where hazard and censoring distributions are Weibull distributions with
+different parameters, i.e. different shape *k* and scale *λ*. In theory,
+this should also work for cases where the distributions are exponential,
 which is equivalent to a Weibull(1, *λ*), or Weibull with the same shape
 parameter *k* for both hazard and censoring distributions. We don’t (and
 probably won’t) provide support for the Gumpertz distribution (another
@@ -67,6 +81,28 @@ the parameters of the empiric density estimation.
 
 For the generated report, please go to \[TODO: add the report link
 address\]
+
+# Remarks
+
+1.  Scale parameter of baseline hazard distribution V.S. Intercept term
+    in the linear predictor
+
+# Improvement
+
+-   I hypothesize there are many way to improve the precision of the
+    averaged censoring proportion using the parameter estimated with the
+    method, where there needs more simulation to examine the factors,
+    such sample size, window span of the loess curve estimation.
+
+-   In the examples in Wan (2017), the author considered to have an
+    intercept term in the besides the parameterization of the baseline
+    hazard function. I wonder if having the interaction term would have
+    effects on the parameter estimation, as intercept should be included
+    in the baseline hazard component.
+
+    -   By having an intercept term in the linear predictor, this simply
+        altered the weibull baseline hazard to a scaled weibull baseline
+        hazard
 
 ### References
 
